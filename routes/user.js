@@ -5,8 +5,9 @@ var userController = require('../controllers/userCntrl');
 var userMiddleware = require('../middlewares/authenticated');
 
 var multipart = require('connect-multiparty');
-var md_upload = multipart({uploadDir:'./uploads/users'});
-api.get('/home', userController.home);
+var md_upload = multipart();
+//var md_upload = multipart({uploadDir:'./uploads/users'});
+
 api.post('/save-user', userController.saveUser);
 api.post('/save-modelo', userController.saveModelo);
 api.post('/login', userController.loginUser);
@@ -17,7 +18,7 @@ api.get('/get-user/:id', userMiddleware.ensureAuth, userController.getUserModelo
 api.put('/edit-red', userMiddleware.ensureAuth, userController.updateRedSocial);
 
 api.get('/users/:page?', userMiddleware.ensureAuth, userController.getUsersPage);
-api.post('/upload-pay-cloudinary/:id', [md_upload],userController.uploadPayCloudinary);
+api.post('/upload-pay-cloudinary/:id',[md_upload],userController.uploadPayCloudinary);
 
 //Subir Fotos  - modelos
 api.post('/upload-user-cloudinary/:id', [md_upload],userController.uploadCloudinary);

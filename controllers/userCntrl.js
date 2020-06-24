@@ -380,11 +380,11 @@ function uploadDNI (req, res){
 
         var userId = req.params.id;
         var file_path = req.files.image.path;
-        console.log('file_path: '+file_path);
+
         var file_split = file_path.split('\\');
         var file_name = file_split[2];
         
-        console.log('file_name: '+file_name);
+
     
         var ext_split = file_name.split('\.');
         var file_ext = ext_split[1];
