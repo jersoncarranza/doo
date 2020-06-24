@@ -5,7 +5,7 @@ var userController = require('../controllers/userCntrl');
 var userMiddleware = require('../middlewares/authenticated');
 
 var multipart = require('connect-multiparty');
-var md_upload = multipart();
+var md_upload = multipart({uploadDir: null});
 //var md_upload = multipart({uploadDir:'./uploads/users'});
 
 api.post('/save-user', userController.saveUser);
