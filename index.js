@@ -8,7 +8,9 @@ var app = require('./app')
 var server = http.createServer(app);
 mongoose.Promise = global.Promise;
 //const uri = 'mongodb://localhost:27017/matchTest';
-const uri = "mongodb+srv://"+conf.db.user+":"+conf.db.password+"@"+conf.db.host+".mongodb.net/<dbname>?retryWrites=true&w=majority";
+const uri = "mongodb+srv://"+ conf.db.user+":"+ conf.db.password +"@"+conf.db.host+".azure.mongodb.net/test?retryWrites=true&w=majority";
+
+//const uri = "mongodb+srv://"+conf.db.user+":"+conf.db.password+"@"+conf.db.host+".mongodb.net/<dbname>?retryWrites=true&w=majority";
 mongoose.connect(uri, {useNewUrlParser: true,  useUnifiedTopology:true})
 .then(() =>{
     
