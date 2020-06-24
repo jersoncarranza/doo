@@ -1,0 +1,42 @@
+{
+  "name": "back-match",
+  "version": "0.0.1",
+  "description": "Buscar parejas en Ecuador Citas",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js"
+
+   },
+  "keywords": [
+    "badoo",
+    "tinder",
+    "pareja",
+    "chica",
+    "mujer",
+    "damas",
+    "citas"
+  ],
+  "author": "jerson carranza",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.20.0",
+    "connect-multiparty": "^2.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.24.0",
+    "mongoose": "^5.8.9",
+    "mongoose-paginate": "^5.0.3",
+    "mongoose-pagination": "^1.0.0",
+    "nodemailer": "^6.4.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "engines": {
+    "node": "12.8.0"
+  }
+
+}
