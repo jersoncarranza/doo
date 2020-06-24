@@ -4,9 +4,9 @@
   "description": "Buscar parejas en Ecuador Citas",
   "main": "index.js",
   "scripts": {
-    "start": "node ./index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postinstall": "ng build --prod"
    },
   "keywords": [
     "badoo",
