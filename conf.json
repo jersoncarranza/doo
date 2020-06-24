@@ -5,9 +5,9 @@
 		"secret":"jdxpup4Mm4jRigo87M3pMN6Rgzo"
 	},
 	"db":{
-		"host":"cluster0-9jb9v",
+		"host":"clusterboom-9u5xr",
 		"name":"boommean",
-		"user":"dbmatch",
-		"password":"60oyKUkPgIrEK5PK"
+		"user":"boom",
+		"password":"t3tjBtScoliOHf8e"
 	}
 }
