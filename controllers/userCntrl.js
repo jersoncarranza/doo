@@ -424,6 +424,53 @@ function uploadDNI (req, res){
         }
 
 
+
+    function uploadPayCloudinary2 (req, res){
+
+        var userId = req.params.id;
+        var file_path = req.files.image.path;
+
+        var file_split = file_path.split('\\');
+        var file_name = file_split[2];
+        
+
+    
+        var ext_split = file_name.split('\.');
+        var file_ext = ext_split[1];
+    
+        cloudinary.config({ 
+            cloud_name: conf.cloudinary.name ,  
+            api_key: conf.cloudinary.key, 
+            api_secret: conf.cloudinary.secret,
+            uploadOptions: {
+                folder: 'pay'
+            }
+        });
+     
+        cloudinary.uploader.upload(file_path,  function(result) { 
+                if(result != null){
+                
+                var format = result.format;
+                var namepublic = result.public_id;
+                var urlimage = namepublic + "."+format;
+                var version = result.version;//.toString();
+                urlimage = "v"+version+"/"+urlimage;
+                
+                User.findByIdAndUpdate(userId,
+                    {imagepay:urlimage},
+                    {new: true},
+                    (err, userUpdated) =>{
+                        if(err) return res.status(500).send({message:'No tienes permiso para actualizar los datos del usuario',status:0})
+                        if(!userUpdated) return res.status(404).send({message:'No se ha podido actualizar el usuario',status:0});
+                        return res.status(200).send({user:userUpdated,status:1});        
+                    })
+                }else{
+                    return res.status(200).send({user:'error',status:0}); 
+                }
+                    
+            });
+    
+        }
     /**Listado usuarios paginado **/
     function getUsersPage(req, res){
         var identity_user_id = req.user.sub;
