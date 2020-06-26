@@ -20,17 +20,20 @@ var cpUpload = upload.single('fileKey');
 
 const DIR = './uploads';
  
-let storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, DIR);
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.fieldname + '-' + Date.now() + '.' + path.extname(file.originalname));
-    }
-});
+// let storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//       cb(null, DIR);
+//     },
+//     filename: (req, file, cb) => {
+//       cb(null, file.fieldname + '-' + Date.now() + '.' + path.extname(file.originalname));
+//     }
+// });
 //let upload = multer({storage: storage});
-/*
+
 var storage = multer.diskStorage({
+    destination: function(req, file, callback){
+        callback(null, "./public/uploads");
+    },
     filename: function(req, file, callback) {
       callback(null, Date.now() + file.originalname);
     }
@@ -44,7 +47,7 @@ var storage = multer.diskStorage({
   };
   var upload = multer({ storage: storage, fileFilter: imageFilter});
   
-*/
+
 
 api.post('/save-user', userController.saveUser);
 api.post('/save-modelo', userController.saveModelo);
@@ -73,15 +76,19 @@ api.get('/users-client/:page?', userMiddleware.ensureAuth, userController.getUse
 api.post('/change-estado',      userMiddleware.ensureAuth, userController.changeEstadoUser);
 
 
-api.post('/upload-pay-cloudinary-2/:id',upload.single('file'), function (req, res) {
-    console.log("3");
-
+api.post('/upload-pay-cloudinary-2/:id', function (req, res) {
         var userId = req.params.id;
-        //var file_path = req.file.image.path;
-         console.log('fieldname '+req.file.fieldname);
-         console.log('originalname '+req.file.originalname);
-
+        var file_path = req.file.image.path;
         var file_path = req.file.originalname;
+
+        /*
+        upload(req, res, function(err) {
+            if(err){
+                return res.end("Error uploading file");
+            }
+        })
+        */
+
 
         cloudinary.config({ 
             cloud_name: conf.cloudinary.name ,  
@@ -99,32 +106,9 @@ api.post('/upload-pay-cloudinary-2/:id',upload.single('file'), function (req, re
             }else{
                 return res.status(200).send({status:0});        
 
-            }
-
-                
-            /*var format = result.format;
-                var namepublic = result.public_id;
-                var urlimage = namepublic + "."+format;
-                var version = result.version;//.toString();
-                urlimage = "v"+version+"/"+urlimage;
-                
-                User.findByIdAndUpdate(userId,
-                    {imagepay:urlimage},
-                    {new: true},
-                    (err, userUpdated) =>{
-                        if(err) return res.status(500).send({message:'No tienes permiso para actualizar los datos del usuario',status:0})
-                        if(!userUpdated) return res.status(404).send({message:'No se ha podido actualizar el usuario',status:0});
-                        return res.status(200).send({user:userUpdated,status:1});        
-                    })
-                    */
-              
-            });
+            }        
+        });
     
-        // console.log('Your file has been received successfully');
-        // return res.send({
-        //   success: true
-        // })
-      //}
 });
 
 api.post('/uploads', async (req, res) => {
