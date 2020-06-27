@@ -1,7 +1,7 @@
 'use strict';
 var http	    = require('http');
 var mongoose    = require('mongoose');
-var PORT        =  process.env.PORT || 5000;
+var PORT        =  process.env.PORT || 4000;
 var server_host = process.env.YOUR_HOST || '0.0.0.0';
 var conf    = require('./conf.json');
 var app = require('./app')
