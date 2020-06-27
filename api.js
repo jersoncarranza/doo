@@ -9,6 +9,7 @@ var point_routes = require('./routes/point');
 var country_routes = require('./routes/country');
 var email_routes = require('./routes/mail');
 var admin_routes = require('./routes/adminRoute');
+const router = express.Router();
 //var multerfile = require('./routes/multer');
 var multer = require('multer');
 var fs = require('fs');
@@ -32,8 +33,9 @@ app.use((req, res, next) => {
 });
 
 
+//app.use('s',multerfile);
 
-app.get('/prueba', function(req, res) {     return res.status(200).send({  status:1 }) });
+router.get("/", (req, res) => { res.json({  hello: "hi!"   }); });app.use('/user',user_routes);
 app.use('/user',user_routes);
 app.use('/email',email_routes);
 app.use('/match', match_routes);
@@ -41,5 +43,7 @@ app.use('/point',  point_routes);
 app.use('/country',  country_routes);
 app.use('/admin',  admin_routes);
 
+app.use(`/api`, router);
 
 module.exports = app;
+module.exports.handler = serverless(app);
