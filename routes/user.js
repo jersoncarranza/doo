@@ -57,7 +57,7 @@ api.put('/edit-red', userMiddleware.ensureAuth, userController.updateRedSocial);
 
 api.get('/users/:page?', userMiddleware.ensureAuth, userController.getUsersPage);
 //api.post('/upload-pay-cloudinary/:id',[md_upload],userController.uploadPayCloudinary);
-api.post('/upload-pay-cloudinary/:id', memoryUpload, userController.uploadPayCloudinary);
+api.post('/upload-pay-cloudinary', memoryUpload, userController.uploadPayCloudinary);
 
 api.post('/upload-pay-cloudinary-2/:id',[md_upload],userController.uploadPayCloudinary);
 

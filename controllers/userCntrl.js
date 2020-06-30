@@ -386,8 +386,8 @@ function uploadDNI (req, res){
     }
     
     function uploadPayCloudinary (req, res){
-        var userId = req.params.id;
-        console.log('vlai'+userId)
+       // var userId = req.params.id;
+        //console.log('vlai'+userId)
 
         //console.log(req.body.nam);
         var file_path = req.file.mimetype;
@@ -401,6 +401,9 @@ function uploadDNI (req, res){
                 var version = result.version;//.toString();
                 urlimage = "v"+version+"/"+urlimage;
                 console.log('urlimage'+urlimage);
+                return res.status(200).send({status:1}); 
+
+                /*
                 User.findByIdAndUpdate({_id:userId},
                     {imagepay:urlimage},
                     {new: true},
@@ -409,7 +412,7 @@ function uploadDNI (req, res){
                         if(!userUpdated) return res.status(404).send({message:'No se ha podido actualizar el usuario',status:0});
                         return res.status(200).send({user:userUpdated,status:1});        
                     })
-                //return res.status(200).send({status:1}); 
+                    */
                 
             }else{
                 console.log(error);
