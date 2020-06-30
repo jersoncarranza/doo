@@ -6,6 +6,15 @@ var jwt  = require('../services/jwt');
 var conf    = require('../conf.json');
 var cloudinary = require('cloudinary');
 var mongoosePaginate = require('mongoose-pagination');
+
+
+  cloudinary.config({
+     cloud_name: 'djempmk2c',
+     api_key: '429628637822674',
+     api_secret: 'jdxpup4Mm4jRigo87M3pMN6Rgzo'
+   });
+
+
 function saveUser(req, res){
     var params = req.body;
     var userSave = new User();
@@ -371,43 +380,28 @@ function uploadDNI (req, res){
             }else{
                 return res.status(200).send({user:'error',status:0}); 
             }
-                
+            
         });
-
-}
-
-    function uploadPayCloudinary (req, res){
-
-        var userId = req.params.id;
-        var file_path = req.files.image.path;
-
-        var file_split = file_path.split('\\');
-        var file_name = file_split[2];
         
+    }
+    
+    function uploadPayCloudinary (req, res){
+        var userId = req.params.id;
+        console.log('vlai'+userId)
 
-    
-        var ext_split = file_name.split('\.');
-        var file_ext = ext_split[1];
-    
-        cloudinary.config({ 
-            cloud_name: conf.cloudinary.name ,  
-            api_key: conf.cloudinary.key, 
-            api_secret: conf.cloudinary.secret,
-            uploadOptions: {
-                folder: 'pay'
-            }
-        });
-     
-        cloudinary.uploader.upload(file_path,  function(result) { 
-                if(result != null){
-                
+        //console.log(req.body.nam);
+        var file_path = req.file.mimetype;
+        var format    = file_path.split('/');
+        cloudinary.v2.uploader
+            .upload_stream({ format: format[1] ,folder: 'pay'}, (error, result) => { 
+            if (result) {
                 var format = result.format;
                 var namepublic = result.public_id;
                 var urlimage = namepublic + "."+format;
                 var version = result.version;//.toString();
                 urlimage = "v"+version+"/"+urlimage;
-                
-                User.findByIdAndUpdate(userId,
+                console.log('urlimage'+urlimage);
+                User.findByIdAndUpdate({_id:userId},
                     {imagepay:urlimage},
                     {new: true},
                     (err, userUpdated) =>{
@@ -415,14 +409,16 @@ function uploadDNI (req, res){
                         if(!userUpdated) return res.status(404).send({message:'No se ha podido actualizar el usuario',status:0});
                         return res.status(200).send({user:userUpdated,status:1});        
                     })
-                }else{
-                    return res.status(200).send({user:'error',status:0}); 
-                }
-                    
-            });
+                //return res.status(200).send({status:1}); 
+                
+            }else{
+                console.log(error);
+                return res.status(200).send({status:0}); 
+            }
     
-        }
+       }).end(req.file.buffer);
 
+    }
 
 
     function uploadPayCloudinary2 (req, res){
